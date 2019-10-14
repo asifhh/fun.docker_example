@@ -1,0 +1,14 @@
+# Create user 'agama' and add them to 'sudo' for sudo access and set
+# the passwd to 'agama'
+#
+# NOTE: Requires 'sudo' package to already be installed
+RUN groupadd -r agama \
+&& useradd --no-log-init \
+  -s /bin/bash \
+  -r -m \
+  -g agama \
+  -G sudo \
+  -p $(echo "agama" | openssl passwd -stdin) agama
+
+# Set 'sudo' to NOPASSWD for all container users
+RUN sed -i -e 's,%sudo.*,%sudo ALL=(ALL) NOPASSWD:ALL,g' /etc/sudoers

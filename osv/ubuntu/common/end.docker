@@ -1,0 +1,16 @@
+# NOTE: This should be added as the last template entry
+# as it will always modify a layer (since the Dockerfile
+# changes,) causing all subsequent layers to be 
+# regenerated.
+
+# Clean up APT content that might still be around
+#RUN apt-get clean autoclean \
+#  && apt-get autoremove -y \
+#  && rm -rf /var/lib/${apt,dpkg,cache,log}
+
+# Ensure that each Docker container self-documents the 
+# versions included in it
+
+ENV AGAMA_VERSION=${AGAMA_VERSION}
+
+COPY LIBRARIES RELEASE Dockerfile /assets/

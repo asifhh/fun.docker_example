@@ -1,0 +1,3 @@
+CONTAINER_REPO_URL=amr-registry.caas.intel.com/vtt-osgc/solutions
+CONTAINER_NAME=example_name
+TAG=agama-${AGAMA_VERSION}

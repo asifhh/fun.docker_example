@@ -1,0 +1,2 @@
+# Pull from the internal cache of images
+FROM amr-registry.caas.intel.com/vtt-osgc/os/${OS_DISTRO}:${OS_RELEASE}

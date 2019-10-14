@@ -1,0 +1,28 @@
+# Update and install gpg-agent as it isn't in the base Ubuntu image and is needed for apt-key
+RUN apt-get -q update \
+  && DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends -q -y install \
+    gpg-agent
+
+# Fetch and install the signing key for OSGC's Agama repository
+RUN wget --no-proxy --quiet -O /tmp/aptly.key http://osgc.jf.intel.com/packages/agama/ubuntu/aptly_repo_signing.key \
+  && APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn apt-key add /tmp/aptly.key \
+  && rm /tmp/aptly.key
+
+# Add internal Agama repository
+RUN apt-add-repository "deb [arch=amd64] http://osgc.jf.intel.com/packages/agama/ubuntu ${OS_RELEASE} main"
+
+# Update and install the Mesa, OpenCL, and Media from Agama
+RUN apt-get -q update \
+  && DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends -q -y install \
+    intel-gmmlib${INTEL_GMMLIB_VERSION} \
+    intel-igc-core${INTEL_IGC_CORE_VERSION} \
+    intel-igc-opencl${INTEL_IGC_OPENCL_VERSION} \
+    libgl1-mesa-glx${LIBGL1_MESA_GLX_VERSION} \
+    libgl1-mesa-dri${LIBGL1_MESA_DRI_VERSION} \
+    intel-opencl${INTEL_OPENCL_VERSION} \
+    intel-media${INTEL_MEDIA_VERSION} \
+    libva2${LIBVA2_VERSION} \
+    ocl-icd-libopencl1 \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+

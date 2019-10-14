@@ -1,0 +1,16 @@
+# Install Intel CA5A cert so Intel certs are recognized
+
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+    ca-certificates \
+    wget \
+    unzip \
+  && mkdir -p /usr/local/share/ca-certificates \
+  && wget -qO tmp.zip http://certificates.intel.com/repository/certificates/IntelSHA2RootChain-Base64.zip \
+     && unzip tmp.zip -d /usr/local/share/ca-certificates \
+     && rm tmp.zip \
+  && wget -qO tmp.zip http://certificates.intel.com/repository/certificates/Intel%20Root%20Certificate%20Chain%20Base64.zip \
+     && unzip tmp.zip -d /usr/local/share/ca-certificates \
+     && rm tmp.zip \
+  && update-ca-certificates --fresh
+

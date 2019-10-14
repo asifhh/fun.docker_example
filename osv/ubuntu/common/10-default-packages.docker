@@ -1,0 +1,19 @@
+# Update the repo lists and then install things using the internal
+# sources. Packages used by many developers are pulled into this image
+# but we do want it to be relatively small.
+#
+# NOTE: We use DEBIAN_FRONTEND=noninteractive to prevent krb5-user from
+#       trying to prompt for configuration details during install.
+RUN apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install \
+    -y --no-install-recommends -q \
+  net-tools \
+  iputils-ping \
+  sudo \
+  wget \
+  locales \
+  software-properties-common
+
+# Set up locales
+RUN localedef -c -f UTF-8 -i en_US en_US.UTF-8
+ENV LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8

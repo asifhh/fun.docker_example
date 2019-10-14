@@ -1,0 +1,9 @@
+# Pre-install proxy configuration values
+#
+# This uses the linux-ftp.ostc.intel.com as a mirror.
+RUN echo "Acquire::http::proxy \"http://proxy-chain.intel.com:911/\";\n" \
+	"Acquire::https::proxy \"https://proxy-chain.intel.com:911/\";\n" \
+	"Acquire::ftp::proxy \"ftp://proxy-chain.intel.com:911/\";\n" \
+	"Acquire::socks::proxy \"socks://proxy-chain.intel.com:1080/\";\n" \
+	"Acquire::http::Proxy::linux-ftp.ostc.intel.com DIRECT;\n" \
+	"Acquire::http::Proxy::osgc.jf.intel.com DIRECT;\n" > /etc/apt/apt.conf

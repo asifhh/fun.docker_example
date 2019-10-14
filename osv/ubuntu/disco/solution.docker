@@ -1,0 +1,12 @@
+#####
+# This file is extremely custom and unique for each individual solution
+# It gets added to the end of the build-docker script, https://gitlab.devtools.intel.com/vtt/sws/osgc/solutions/scripts/build-dockerfile.sh.
+
+# General Example
+# Update and install the Mesa, OpenCL, and Media
+RUN apt-get -q update \
+  && DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends -q -y install \
+    ffmpeg clinfo
+
+ENTRYPOINT ['/bin/bash']
+CMD ['clinfo']
